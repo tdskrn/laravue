@@ -13,6 +13,8 @@ class DepartmentController extends Controller
 
 
 
+
+
     // codigo abaixo crud com vue js
     public function storeDepartment(Request $request)
     {
@@ -32,11 +34,13 @@ class DepartmentController extends Controller
 
     public function getDepartments()
     {
+
         return response()->json(Department::all());
     }
 
     public function updateDepartment(Request $request, $id)
     {
+
         $request->validate([
             'name' => ['required'],
             'director_id' => ['required'],
@@ -53,6 +57,7 @@ class DepartmentController extends Controller
 
     public function deleteDepartment($id)
     {
+
         Department::where('id', $id)->delete();
         return response()->json('Success');
     }

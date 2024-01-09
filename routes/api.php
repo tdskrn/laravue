@@ -19,7 +19,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('getDepartments', [DepartmentController::class, 'getDepartments']);
-Route::post('storeDepartment', [DepartmentController::class, 'storeDepartment']);
-Route::post('updateDepartment/{id}', [DepartmentController::class, 'updateDepartment']);
-Route::post('deleteDepartment/{id}', [DepartmentController::class, 'deleteDepartment']);
+Route::get('getDepartments', [DepartmentController::class, 'getDepartments'])->middleware('auth:api');
+Route::post('storeDepartment', [DepartmentController::class, 'storeDepartment'])->middleware('auth:api');
+Route::post('updateDepartment/{id}', [DepartmentController::class, 'updateDepartment'])->middleware('auth:api');
+Route::post('deleteDepartment/{id}', [DepartmentController::class, 'deleteDepartment'])->middleware('auth:api');
