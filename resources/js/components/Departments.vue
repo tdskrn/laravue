@@ -50,6 +50,12 @@
                                             <label for="name">Name</label>
                                             <input type="text" class="form-control" name="name"
                                                 v-model="departmentData.name">
+                                            <!-- <p class="text-danger" v-if="departmentErrors.name">
+                                                Name is required
+                                            </p> -->
+                                            <div class="text-danger" v-if="departmentData.errors.has('name')"
+                                                v-html="departmentData.errors.get('name')">
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
@@ -61,6 +67,12 @@
                                                 <option value="1">IT Director</option>
                                                 <option value="2">HR Director</option>
                                             </select>
+                                            <!-- <p class="text-danger" v-if="departmentErrors.director_id">
+                                                Director is required
+                                            </p> -->
+                                            <div class="text-danger" v-if="departmentData.errors.has('director_id')"
+                                                v-html="departmentData.errors.get('director_id')">
+                                            </div>
                                         </div>
                                     </div>
 
@@ -90,11 +102,17 @@ export default {
             departments: {
 
             },
-            departmentData: {
+            departmentData: new Form({
                 id: '',
                 name: '',
                 director_id: '',
-            }
+            }),
+            departmentErrors: {
+
+                name: false,
+                director_id: false,
+            },
+
         }
     },
     methods: {
@@ -106,12 +124,25 @@ export default {
         },
 
         storeDepartment() {
-            axios.post(window.url + 'api/storeDepartment', this.departmentData).then(
+            // this.departmentData.name == '' ? this.departmentErrors.name = true : this.departmentErrors.name = false;
+            // this.departmentData.director_id == '' ? this.departmentErrors.director_id = true : this.departmentErrors.director_id = false;
+
+            // if (this.departmentData.name && this.departmentData.director_id) 
+            // {
+            // axios.post(window.url + 'api/storeDepartment', this.departmentData).then(
+            //     (response) => {
+            //         this.getDepartments()
+            //         $('#exampleModal').modal('hide')
+            //     }
+            // );
+            this.departmentData.post(window.url + 'api/storeDepartment').then(
                 (response) => {
                     this.getDepartments()
                     $('#exampleModal').modal('hide')
                 }
             );
+            // }
+
         },
         getDepartments() {
             axios.get(`${window.url}api/getDepartments`).then((response) => {
@@ -127,12 +158,24 @@ export default {
             $('#exampleModal').modal('show')
         },
         updateDepartment() {
-            axios.post(window.url + 'api/updateDepartment/' + this.departmentData.id, this.departmentData).then(
-                (response) => {
+            // this.departmentData.name == '' ? this.departmentErrors.name = true : this.departmentErrors.name = false;
+            // this.departmentData.director_id == '' ? this.departmentErrors.director_id = true : this.departmentErrors.director_id = false;
+
+            // if (this.departmentData.name && this.departmentData.director_id) {
+            // axios.post(window.url + 'api/updateDepartment/' + this.departmentData.id, this.departmentData).then(
+            //     (_) => {
+            //         this.getDepartments();
+            //         $('#exampleModal').modal('hide')
+            //     }
+            // );
+            this.departmentData.post(window.url + 'api/updateDepartment/' + this.departmentData.id).then(
+                (_) => {
                     this.getDepartments();
                     $('#exampleModal').modal('hide')
                 }
             );
+            // }
+
         },
         deleteDepartment(department) {
             if (confirm('Are yoy sure you wanna delete department?')) {
@@ -146,6 +189,7 @@ export default {
         }
     },
     mounted() {
+        //Como se fosse um initState()
         this.getDepartments()
     }
 }

@@ -10,10 +10,17 @@ use Illuminate\Http\Request;
 
 class DepartmentController extends Controller
 {
+
+
+
     // codigo abaixo crud com vue js
     public function storeDepartment(Request $request)
     {
 
+        $request->validate([
+            'name' => ['required'],
+            'director_id' => ['required'],
+        ]);
         Department::create([
             'user_id' => 1,
             'name' => $request->name,
@@ -30,6 +37,11 @@ class DepartmentController extends Controller
 
     public function updateDepartment(Request $request, $id)
     {
+        $request->validate([
+            'name' => ['required'],
+            'director_id' => ['required'],
+        ]);
+
         Department::where('id', $id)->update([
 
             'name' => $request->name,

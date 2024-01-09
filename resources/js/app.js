@@ -4,6 +4,8 @@ import { createApp } from 'vue'
 
 // import Counter from './components/Counter.vue'
 import Departments from './components/Departments.vue'
+import Form from 'vform'
+window.Form = Form
 
 const app = createApp({})
 
